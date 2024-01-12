@@ -1,1 +1,2 @@
 *.pb.go
+rpc_function/calculator_rpc/*.pb.go
