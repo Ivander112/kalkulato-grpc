@@ -32,5 +32,4 @@ jalankan command dibawah untuk menjalankan client:
 
     go run client/client.go
     
-  Saat menjalankan program client maka user akan diminta memasukan 2 bilangan. Program diatur agar saat pengurangan maka bilangan pertama akan dikurangi bilangan kedua dan saat pembagian maka bilangan pertama akan dibagi oleh bilangan kedua
-  
+  Saat menjalankan program client maka user akan diminta memasukan 2 bilangan. Program diatur agar saat pengurangan maka bilangan pertama akan dikurangi bilangan kedua dan saat pembagian maka bilangan pertama akan dibagi oleh bilangan kedua. Program client tidak akan menerima input selain angka
