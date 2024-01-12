@@ -11,7 +11,7 @@ import (
 
 	"google.golang.org/grpc"
 )
-
+// port server
 var port = flag.Int("port", 50055, "port server")
 
 type server struct {

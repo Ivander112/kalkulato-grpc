@@ -6,7 +6,7 @@ kunjungi link berikut untuk proses instalasi golang : [install golang](https://g
 ### 2.  Instalasi Proto Compiler
 setelah instalasi golang. Perlu juga dilakukan instalasi proto compiler. Proses instalasi dapat dilakukan di link berikut : 
 [instalasi proto compiler](https://grpc.io/docs/protoc-installation/)
-Untuk OS windows jika masih kurang jelas dapat mengikuti langkah berikut: [Instalisasi proto compiler windows](https://www.geeksforgeeks.org/how-to-install-protocol-buffers-on-windows/) 
+Untuk OS windows jika masih kurang jelas dapat mengikuti langkah berikut: [Instalasi proto compiler windows](https://www.geeksforgeeks.org/how-to-install-protocol-buffers-on-windows/) 
 
 ### 3. Clone Repository
 jalankan command dibawah untuk clone repository ini:

@@ -10,8 +10,8 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	pb "Ivander112/kalkulator-grpc/rpc_function/calculator_rpc"
 )
-
-var serverAddr = flag.String("server", "localhost:50055", "server address")
+// alamat server
+var serverAddr = flag.String("server", "localhost:50055", "alamat server")
 
 func main() {
 	flag.Parse()
@@ -23,7 +23,7 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewCalcServiceClient(conn)
-	// mamsukan input angka
+	// Input angka dari user
 	var n1, n2 float32
 	// memastikan operand1 adalah angka
 	input1:
