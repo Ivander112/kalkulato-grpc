@@ -6,36 +6,40 @@ import (
 	"fmt"
 	"log"
 
-	pb "Ivander112/kalkulator-grpc/rpc_function/calculator_rpc"
-
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	pb "Ivander112/kalkulator-grpc/rpc_function/calculator_rpc"
 )
 
 var serverAddr = flag.String("server", "localhost:50055", "server address")
 
 func main() {
 	flag.Parse()
-
-	conn, err := grpc.Dial(*serverAddr, grpc.WithInsecure())
+	// Melakukan koneksi ke server
+	conn, err := grpc.Dial(*serverAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
 	client := pb.NewCalcServiceClient(conn)
-
+	// mamsukan input angka
 	var n1, n2 float32
-
+	// memastikan operand1 adalah angka
+	input1:
 	fmt.Print("Masukkan bilangan pertama: ")
 	_, err = fmt.Scan(&n1)
 	if err != nil {
-		log.Fatalf("error reading operand1: %v", err)
+		log.Printf("Bilangan harus angka: %v", err)
+		goto input1
 	}
-
+	// memastikan operand2 adalah angka
+	input2:
 	fmt.Print("Masukkan bilangan kedua: ")
 	_, err = fmt.Scan(&n2)
 	if err != nil {
-		log.Fatalf("error reading operand2: %v", err)
+		log.Printf("Bilangan harus angka: %v", err)
+		goto input2
 	}
 
 	req := &pb.CalcRequest{
