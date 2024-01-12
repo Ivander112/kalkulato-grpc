@@ -26,7 +26,7 @@ func (s *server) CalcStart(ctx context.Context, req *pb.CalcRequest) (*pb.CalcRe
 
 	add := n1 + n2
 	sub := n1 - n2
-	mult := n2 * n2
+	mult := n2 * n1
 
 	var zeroDiv bool
 	var divisionResult float32
@@ -36,7 +36,7 @@ func (s *server) CalcStart(ctx context.Context, req *pb.CalcRequest) (*pb.CalcRe
 		divisionResult = 0
 	} else {
 		zeroDiv = false
-		divisionResult = float32(n1 / n2)
+		divisionResult = float32(n1) / float32(n2)
 	}
 
 	response := &pb.CalcResponse{
