@@ -9,27 +9,22 @@ import (
 	pb "Ivander112/kalkulator-grpc/rpc_function/calculator_rpc"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
-var serverAddr = flag.String("server", "localhost:50055", "The server address")
+var serverAddr = flag.String("server", "localhost:50055", "server address")
 
 func main() {
-
-	// Menghubungkan ke server gRPC
 	flag.Parse()
-	// Set up a connection to the server.
-	conn, err := grpc.Dial(*serverAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
+
+	conn, err := grpc.Dial(*serverAddr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
 
-	// Membuat instance dari CalcService client
 	client := pb.NewCalcServiceClient(conn)
 
-	// Mengambil input dari pengguna
-	var n1, n2 int32
+	var n1, n2 float32
 
 	fmt.Print("Masukkan bilangan pertama: ")
 	_, err = fmt.Scan(&n1)
@@ -43,24 +38,40 @@ func main() {
 		log.Fatalf("error reading operand2: %v", err)
 	}
 
-	// Mengisi data CalcRequest
 	req := &pb.CalcRequest{
 		Operand1: n1,
 		Operand2: n2,
 	}
 
-	// Memanggil CalcStart di server
-	resp, err := client.CalcStart(context.Background(), req)
+	// Panggil metode CalcAdd di server
+	addResp, err := client.CalcAdd(context.Background(), req)
 	if err != nil {
-		log.Fatalf("error calling CalcStart: %v", err)
+		log.Fatalf("error calling CalcAdd: %v", err)
+	}
+	fmt.Printf("Hasil penjumlahan: %v\n", addResp.GetResult())
+
+	// Panggil metode CalcSubtract di server
+	subtractResp, err := client.CalcSubtract(context.Background(), req)
+	if err != nil {
+		log.Fatalf("error calling CalcSubtract: %v", err)
+	}
+	fmt.Printf("Hasil pengurangan: %v\n", subtractResp.GetResult())
+
+	// Panggil metode CalcDivide di server
+	divideResp, err := client.CalcDivide(context.Background(), req)
+	if err != nil {
+		log.Fatalf("error calling CalcDivide: %v", err)
+	}
+	if divideResp.GetZeroDiv() {
+		fmt.Println("Hasil pembagian: Pembagi 0. Pembagian tidak bisa dilakukan")
+	} else {
+		fmt.Printf("Hasil pembagian: %v\n", divideResp.GetResult())
 	}
 
-	fmt.Printf("Hasil penjumlahan: %d\n", resp.AdditionResult)
-	fmt.Printf("Hasil pengurangan: %d\n", resp.SubtractionResult)
-	if resp.ZeroDiv == true {
-		fmt.Printf("Hasil pembagian: Pembagi 0. Pembagian tidak bisa dilakukan\n")
-	} else {
-		fmt.Printf("Hasil pembagian: %f\n", resp.DivisionResult)
+	// Panggil metode CalcMultiply di server
+	multiplyResp, err := client.CalcMultiply(context.Background(), req)
+	if err != nil {
+		log.Fatalf("error calling CalcMultiply: %v", err)
 	}
-	fmt.Printf("Hasil perkalian: %d\n", resp.MultiplicationResult)
+	fmt.Printf("Hasil perkalian: %v\n", multiplyResp.GetResult())
 }

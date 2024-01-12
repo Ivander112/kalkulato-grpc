@@ -1,5 +1,3 @@
-// main.go
-
 package main
 
 import (
@@ -14,40 +12,41 @@ import (
 	"google.golang.org/grpc"
 )
 
-var port = flag.Int("port", 50055, "The server port")
+var port = flag.Int("port", 50055, "port server")
 
 type server struct {
 	pb.UnimplementedCalcServiceServer
 }
 
-func (s *server) CalcStart(ctx context.Context, req *pb.CalcRequest) (*pb.CalcResponse, error) {
-	n1 := req.GetOperand1()
-	n2 := req.GetOperand2()
+func (s *server) CalcAdd(ctx context.Context, req *pb.CalcRequest) (*pb.CalcAddResponse, error) {
+	result := req.GetOperand1() + req.GetOperand2()
+	return &pb.CalcAddResponse{Result: result}, nil
+}
 
-	add := n1 + n2
-	sub := n1 - n2
-	mult := n2 * n1
+func (s *server) CalcSubtract(ctx context.Context, req *pb.CalcRequest) (*pb.CalcSubtractResponse, error) {
+	result := req.GetOperand1() - req.GetOperand2()
+	return &pb.CalcSubtractResponse{Result: result}, nil
+}
 
+func (s *server) CalcDivide(ctx context.Context, req *pb.CalcRequest) (*pb.CalcDivideResponse, error) {
+	operand2 := req.GetOperand2()
 	var zeroDiv bool
-	var divisionResult float32
+	var result float32
 
-	if n2 == 0 {
+	if operand2 == 0 {
 		zeroDiv = true
-		divisionResult = 0
+		result = 0
 	} else {
 		zeroDiv = false
-		divisionResult = float32(n1) / float32(n2)
+		result = req.GetOperand1() / operand2
 	}
 
-	response := &pb.CalcResponse{
-		AdditionResult:       int32(add),
-		SubtractionResult:    sub,
-		DivisionResult:       divisionResult,
-		MultiplicationResult: mult,
-		ZeroDiv:              zeroDiv,
-	}
+	return &pb.CalcDivideResponse{Result: result, ZeroDiv: zeroDiv}, nil
+}
 
-	return response, nil
+func (s *server) CalcMultiply(ctx context.Context, req *pb.CalcRequest) (*pb.CalcMultiplyResponse, error) {
+	result := req.GetOperand1() * req.GetOperand2()
+	return &pb.CalcMultiplyResponse{Result: result}, nil
 }
 
 func main() {

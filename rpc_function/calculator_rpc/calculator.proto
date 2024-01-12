@@ -2,21 +2,37 @@ syntax = "proto3";
 option go_package = "rpc_function/calculator_rpc";
 package calculator;
 
-// Definisi pesan (message)
+// Pesan berupa input bilangan
 message CalcRequest {
-  int32 operand1 = 1;
-  int32 operand2 = 2;
+  float operand1 = 1;
+  float operand2 = 2;
 }
 
-message CalcResponse {
-  int32 addition_result = 1;
-  int32 subtraction_result = 2;
-  float division_result = 3;
-  int32 multiplication_result = 4;
-  bool zero_div = 5;
+// Pesan berupa response output server untuk penjumlahan
+message CalcAddResponse {
+  float result = 1;
+}
+
+// Pesan berupa response output server untuk pengurangan
+message CalcSubtractResponse {
+  float result = 1;
+}
+
+// Pesan berupa response output server untuk pembagian
+message CalcDivideResponse {
+  float result = 1;
+  bool zero_div = 2;
+}
+
+// Pesan berupa response output server untuk perkalian
+message CalcMultiplyResponse {
+  float result = 1;
 }
 
 // Definisi layanan gRPC
 service CalcService {
-  rpc CalcStart (CalcRequest) returns (CalcResponse);
+  rpc CalcAdd (CalcRequest) returns (CalcAddResponse);
+  rpc CalcSubtract (CalcRequest) returns (CalcSubtractResponse);
+  rpc CalcDivide (CalcRequest) returns (CalcDivideResponse);
+  rpc CalcMultiply (CalcRequest) returns (CalcMultiplyResponse);
 }
