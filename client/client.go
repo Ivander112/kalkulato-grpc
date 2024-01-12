@@ -43,21 +43,21 @@ func main() {
 		Operand2: n2,
 	}
 
-	// Panggil metode CalcAdd di server
+	// Memanggil fungsi CalcAdd dari server
 	addResp, err := client.CalcAdd(context.Background(), req)
 	if err != nil {
 		log.Fatalf("error calling CalcAdd: %v", err)
 	}
 	fmt.Printf("Hasil penjumlahan: %v\n", addResp.GetResult())
 
-	// Panggil metode CalcSubtract di server
+	// Memanggil fungsi CalcSubtract dari server
 	subtractResp, err := client.CalcSubtract(context.Background(), req)
 	if err != nil {
 		log.Fatalf("error calling CalcSubtract: %v", err)
 	}
 	fmt.Printf("Hasil pengurangan: %v\n", subtractResp.GetResult())
 
-	// Panggil metode CalcDivide di server
+	// Memanggil fungsi CalcDivide dari server
 	divideResp, err := client.CalcDivide(context.Background(), req)
 	if err != nil {
 		log.Fatalf("error calling CalcDivide: %v", err)
@@ -68,7 +68,7 @@ func main() {
 		fmt.Printf("Hasil pembagian: %v\n", divideResp.GetResult())
 	}
 
-	// Panggil metode CalcMultiply di server
+	// Memanggil metode CalcMultiply dari server
 	multiplyResp, err := client.CalcMultiply(context.Background(), req)
 	if err != nil {
 		log.Fatalf("error calling CalcMultiply: %v", err)

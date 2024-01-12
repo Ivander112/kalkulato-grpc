@@ -31,8 +31,8 @@ message CalcMultiplyResponse {
 
 // Definisi layanan gRPC
 service CalcService {
-  rpc CalcAdd (CalcRequest) returns (CalcAddResponse);
-  rpc CalcSubtract (CalcRequest) returns (CalcSubtractResponse);
-  rpc CalcDivide (CalcRequest) returns (CalcDivideResponse);
-  rpc CalcMultiply (CalcRequest) returns (CalcMultiplyResponse);
+  rpc CalcAdd (CalcRequest) returns (CalcAddResponse); //penjumlahan
+  rpc CalcSubtract (CalcRequest) returns (CalcSubtractResponse); //pengurangan
+  rpc CalcDivide (CalcRequest) returns (CalcDivideResponse); // pembagian
+  rpc CalcMultiply (CalcRequest) returns (CalcMultiplyResponse); //perkalian
 }
