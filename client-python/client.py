@@ -9,12 +9,24 @@ def main():
     # Melakukan koneksi ke server
     with grpc.insecure_channel(server_addr) as channel:
         stub = pb_grpc.CalcServiceStub(channel)
-
         # Input angka dari user
-        n1 = float(input("Masukkan bilangan pertama: "))
-        n2 = float(input("Masukkan bilangan kedua: "))
+        while True:   
+            try:
+                n1 = input("Masukkan bilangan pertama: ")
+                angka = float(n1)
+                break  # Keluar dari loop jika input adalah angka
+            except ValueError:
+                print("Input bukan angka. Silakan coba lagi.")
 
-        req = pb.CalcRequest(operand1=n1, operand2=n2)
+        while True:   
+            try:
+                n2 = input("Masukkan bilangan kedua: ")
+                angka = float(n2)
+                break  # Keluar dari loop jika input adalah angka
+            except ValueError:
+                print("Input bukan angka. Silakan coba lagi.")
+
+        req = pb.CalcRequest(operand1=float(n1), operand2=float(n2))
 
         # Memanggil fungsi CalcAdd dari server
         add_resp = stub.CalcAdd(req)
