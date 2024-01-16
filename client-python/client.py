@@ -1,6 +1,6 @@
 import grpc
-from rpc_function.calculator_rpc import calculator_pb2 as pb
-from rpc_function.calculator_rpc import calculator_pb2_grpc as pb_grpc
+import calculator_pb2 as pb
+import calculator_pb2_grpc as pb_grpc
 
 # Alamat server
 server_addr = 'localhost:50055'
@@ -14,7 +14,7 @@ def main():
         n1 = float(input("Masukkan bilangan pertama: "))
         n2 = float(input("Masukkan bilangan kedua: "))
 
-        req = pb.CalcRequest(Operand1=n1, Operand2=n2)
+        req = pb.CalcRequest(operand1=n1, operand2=n2)
 
         # Memanggil fungsi CalcAdd dari server
         add_resp = stub.CalcAdd(req)
