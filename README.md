@@ -94,8 +94,6 @@ protoc --go_out=. --go-grpc_out=. rpc_function/calculator_rpc/calculator.proto
 
 **Note** : command diatas dibuat meyesuaikan path yang digunakan di repository github. Jika ingin mengubah lokasi file maka ubah "rpc_function/calculator_rpc/calculator.proto" sesuai dengan path dari file proto tersebut
 
-  ### B. Persiapan Instalasi Python
-
 ### 2. Membuat file proto python
 
 jalankan command dibawah untuk membuat file protobuffer yang akan digunakan oleh server dan client:
