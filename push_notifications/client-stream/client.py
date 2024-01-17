@@ -1,25 +1,23 @@
 import grpc
 import sys
-
-from concurrent import futures
-import time
-
 import notifications_pb2
 import notifications_pb2_grpc
 
 def run(option):
+    # Memulai koneksi ke server
     channel = grpc.insecure_channel('localhost:50051')
     stub = notifications_pb2_grpc.NotificationsServiceStub(channel)
+    # tentukan fungsi yang dipangggil sesuai argumennya
     if option == 'buah':
         response_streams = stub.FruitsNotifications(notifications_pb2.NotificationsRequest())
     elif option == 'universitas':
-        country = input("Masukkan nama negaranya: ")
+        country = input("Masukkan nama negaranya: ")  # Input nama negara dari user 
         request = notifications_pb2.NotificationsRequest(Notification_Name=country)
-        response_streams = stub.UniversitiesNotifications(request)
+        response_streams = stub.UniversitiesNotifications(request) # Memulai request
     else:
         print("Opsi yang valid adalah 'buah' atau 'universitas'")
         return
-
+    # Mencetak response sesuai notifikasi yang di iginkan
     for response in response_streams:
         if option == 'buah':
             print(f"Fruit: {response.Name}")
@@ -34,8 +32,9 @@ def run(option):
         print("-----")
 
 if __name__ == '__main__':
+    # menerima argumen dan menunjukan 
     if len(sys.argv) != 2:
-        print("Usage: python client.py [buah/universitas]")
+        print("masukan argumen'buah' atau 'universitas'")
         sys.exit(1)
 
     option = sys.argv[1]

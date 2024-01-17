@@ -18,11 +18,12 @@ import (
 // port server
 var port = flag.Int("port", 50055, "port server")
 
+// Fungsi bawaan
 type NotificationsServer struct {
 	pb.UnimplementedNotificationsServiceServer
 }
 
-// Struktur data untuk objek JSON
+// Struktur data untuk objek JSON buah
 type Fruit struct {
 	Family    string `json:"family"`
 	Genus     string `json:"genus"`
@@ -48,7 +49,7 @@ type University struct {
 	Web_Pages      []string   `json:"web_pages"`
 }
 
-// getDataFromURI mengambil data JSON dari URI dan mengembalikan array dari struktur yang sesuai
+// Fungsi untuk mengambil data JSON dari URI dan mengembalikan array sesuai dengan struktur nya
 func getDataFromURI(uri string, target interface{}) error {
 	resp, err := http.Get(uri)
 	if err != nil {
@@ -66,7 +67,7 @@ func getDataFromURI(uri string, target interface{}) error {
 
 	return nil
 }
-
+// fungsi untuk mengirim notifikasi nutrisi buah
 func (s *NotificationsServer) FruitsNotifications(req *pb.NotificationsRequest, stream pb.NotificationsService_FruitsNotificationsServer) error {
 	log.Printf("Users mengikuti layanan notifikasi nutrisi pada buah")
 
@@ -77,8 +78,7 @@ func (s *NotificationsServer) FruitsNotifications(req *pb.NotificationsRequest, 
 	if err := getDataFromURI(fruitURI, &fruits); err != nil {
 		log.Fatal(err)
 	}
-
-	// fmt.Println(fruits)
+	// Stream mengembalikan response notifikasi
 	for _, fruit := range fruits {
 		response := &pb.FruitResponse{
 			Name:          fruit.Name,
@@ -97,10 +97,9 @@ func (s *NotificationsServer) FruitsNotifications(req *pb.NotificationsRequest, 
 		// Simulasi penundaan untuk setiap buah yang dikirim
 		time.Sleep(200 * time.Millisecond)
 	}
-
 	return nil
 }
-
+// fungsi untuk mengirim notifikasi daftar universitas
 func (s *NotificationsServer) UniversitiesNotifications(req *pb.NotificationsRequest, stream pb.NotificationsService_UniversitiesNotificationsServer) error {
 	log.Printf("Users mengikuti layanan notifikasi daftar universitas")
 	country := req.Notification_Name
@@ -121,7 +120,8 @@ func (s *NotificationsServer) UniversitiesNotifications(req *pb.NotificationsReq
 	// Jika negara yang dicari tidak ada
 	if len(universities) == 0 {
 		log.Fatal("Tidak ada universitas untuk negara tersebut")
-	}	
+	}
+	// Stream mengembalikan response notifikas
 	for _, university := range universities {
 		webPages := ""
 		if len(university.Web_Pages) > 0 {
@@ -131,7 +131,7 @@ func (s *NotificationsServer) UniversitiesNotifications(req *pb.NotificationsReq
 			Name:      university.Name,
 			Web_Pages: webPages,
 		}
-		// fmt.Println(response)
+
 		if err := stream.Send(response); err != nil {
 			log.Printf("Error sending data to stream: %v", err)
 			return err
@@ -145,13 +145,14 @@ func (s *NotificationsServer) UniversitiesNotifications(req *pb.NotificationsReq
 }
 
 func main() {
+	// listen server pada port 50051
 	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		log.Fatalf("Failed to listen on port 50051: %v", err)
 	}
 	grpcServer := grpc.NewServer()
 	pb.RegisterNotificationsServiceServer(grpcServer, &NotificationsServer{})
-
+	// Memulai server
 	log.Printf("Starting Push Notification server on port 50051")
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve gRPC server over port 50051: %v", err)

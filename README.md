@@ -120,6 +120,6 @@ Saat menjalankan program client maka user akan diminta memasukan 2 bilangan. Pro
 ### 3. Jalankan Client python
 Client python dapat dijalnkan dengan command ini:
 
-    python client-python/client.py
+    python3 client-python/client.py
 
 client ini memiliki fungsi yang sama dengan client golang
