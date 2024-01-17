@@ -10,11 +10,12 @@ import notifications_pb2_grpc
 def run(option):
     channel = grpc.insecure_channel('localhost:50051')
     stub = notifications_pb2_grpc.NotificationsServiceStub(channel)
-
     if option == 'buah':
         response_streams = stub.FruitsNotifications(notifications_pb2.NotificationsRequest())
     elif option == 'universitas':
-        response_streams = stub.UniversitiesNotifications(notifications_pb2.NotificationsRequest())
+        country = input("Masukkan nama negaranya: ")
+        request = notifications_pb2.NotificationsRequest(Notification_Name=country)
+        response_streams = stub.UniversitiesNotifications(request)
     else:
         print("Opsi yang valid adalah 'buah' atau 'universitas'")
         return

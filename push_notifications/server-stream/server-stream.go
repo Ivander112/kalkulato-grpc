@@ -103,16 +103,25 @@ func (s *NotificationsServer) FruitsNotifications(req *pb.NotificationsRequest, 
 
 func (s *NotificationsServer) UniversitiesNotifications(req *pb.NotificationsRequest, stream pb.NotificationsService_UniversitiesNotificationsServer) error {
 	log.Printf("Users mengikuti layanan notifikasi daftar universitas")
+	country := req.Notification_Name
+	// Memastikan country tidak boleh kosong
+	if len(country) == 0 {
+		log.Fatalln("Nama negara tidak boleh kosong")
+	}
 
 	// Mengambil data dari URI untuk universitas
-	universityURI := "http://universities.hipolabs.com/search?country=Indonesia"
+	universityURI := "http://universities.hipolabs.com/search?country="+country
+	log.Printf(universityURI)
+	
 	var universities []University
-
 	if err := getDataFromURI(universityURI, &universities); err != nil {
 		log.Fatal(err)
 		return err
 	}
-
+	// Jika negara yang dicari tidak ada
+	if len(universities) == 0 {
+		log.Fatal("Tidak ada universitas untuk negara tersebut")
+	}	
 	for _, university := range universities {
 		webPages := ""
 		if len(university.Web_Pages) > 0 {
