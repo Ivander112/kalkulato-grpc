@@ -1,0 +1,27 @@
+syntax = "proto3";
+option go_package = "push_notifications/rpc-stream";
+package notifications;
+
+message NotificationsRequest {
+  string Notification_Name = 1;
+}
+
+message FruitResponse {
+  string Name = 1;
+  float Calories = 2;
+  float Carbohydrates = 3;
+  float Fat = 4;
+  float Protein = 5;
+  float Sugar = 6;
+}
+
+message UniversitiesResponse {
+  string Name = 1;
+  string Web_Pages = 2;
+}
+
+// Definisi layanan gRPC
+service NotificationsService {
+  rpc FruitsNotifications (NotificationsRequest) returns (stream FruitResponse);
+  rpc UniversitiesNotifications (NotificationsRequest) returns (stream UniversitiesResponse);
+}
