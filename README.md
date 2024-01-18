@@ -102,22 +102,20 @@ jalankan command dibawah untuk membuat file protobuffer yang akan digunakan oleh
 
 **Note** : command diatas dibuat meyesuaikan path yang digunakan di repository github. Jika ingin mengubah lokasi file maka sesuaikan pathnya
 
-  ### B. Persiapan Instalasi Python
-
-### 1. Jalankan Server Golang
+### 3. Jalankan Server Golang
 
     go run server/server.go
 
 jalankan command dibawah untuk menjalankan client:
 
-### 2. Jalankan Client Golang
+### 4. Jalankan Client Golang
 Client golang dapat dijalnkan dengan command ini:
 
     go run client/client.go
 
 Saat menjalankan program client maka user akan diminta memasukan 2 bilangan. Program diatur agar saat pengurangan maka bilangan pertama akan dikurangi bilangan kedua dan saat pembagian maka bilangan pertama akan dibagi oleh bilangan kedua. Program client tidak akan menerima input selain angka
 
-### 3. Jalankan Client python
+### 5. Jalankan Client python
 Client python dapat dijalnkan dengan command ini:
 
     python3 client-python/client.py
