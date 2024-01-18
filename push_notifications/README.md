@@ -1,4 +1,3 @@
-
 ## Program Push Notifications Berbasis gRPC
 
  ### 1. Persiapan
@@ -43,4 +42,4 @@ notifikasi kedua adalah argument "universitas" dengan command seperti berikut.
 
     python3 client-stream/client.py universitas
     
-setelah command ini dijalankan maka user akan diminta memasukan nama negara. data yang dikembalikan adalah daftar universitas negraa tersebut. Jika nama negara dikosongkan atau nama negra tersebut tidak ada di dalam API maka program akan error.
+setelah command ini dijalankan maka user akan diminta memasukan nama negara. Data yang dikembalikan adalah daftar universitas negara tersebut serta URI web nya. Jika nama negara dikosongkan atau nama negara tersebut tidak ada di dalam API maka program akan error.
